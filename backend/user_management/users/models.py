@@ -1,5 +1,10 @@
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
@@ -60,3 +65,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "User",
         verbose_name_plural = "Users"
+
+
+@receiver(post_save, sender=CustomUser)
+def send_activation_email(instance, **kwargs):
+    token = default_token_generator.make_token(instance)
+    activation_link = f'api/users/activate/?user={instance.id}&token={token}'
+    send_mail(
+        subject='Account activation',
+        message=activation_link,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[instance.email, ]
+    )
