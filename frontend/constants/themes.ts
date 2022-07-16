@@ -42,6 +42,8 @@
     primary: '#000',
     secondary: '#fff',
     inputText: '#adadad',
+    authBtn: '#F17119',
+    link: '#c0392b',
   },
   media: {
     minTabletLandScape: '(min-width: 992px)',
@@ -58,6 +60,10 @@
     onlyTabletLandScape: '(min-width: 992px) and (max-width: 1200px)',
     onlyLaptop: '(min-width: 1200px) and (max-width: 1500px)',
     onlyPC: '(min-width: 1500px) and (max-width: 1800px)',
+  },
+  boxSizes: {
+    authContainerWidth: '600px',
+    authContainerHeight: '500px',
   },
 };
 

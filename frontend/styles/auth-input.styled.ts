@@ -1,4 +1,5 @@
-﻿import styled from 'styled-components';
+﻿import { Field } from 'formik';
+import styled from 'styled-components';
 import themes from '../constants/themes';
 
 export const InputWrapper = styled.div`
@@ -14,11 +15,11 @@ export const InputContainer = styled.div`
   padding-left: 12px;
 `;
 
-export const Input = styled.input`
+export const Input = styled(Field)`
   color: ${themes.colors.primary};
   border: none;
   padding: 5px ${themes.spacing.inputHorizontal};
-  font-size: ${themes.font.size.fourteenth};
+  font-size: ${themes.font.size.primary};
   display: block;
   box-sizing: border-box;
   width: 100%;
