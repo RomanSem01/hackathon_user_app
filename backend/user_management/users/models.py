@@ -71,7 +71,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 def send_activation_email(instance, created, **kwargs):
     if created:
         token = default_token_generator.make_token(instance)
-        activation_link = f'http://localhost:8000/api/users/activate/?user={instance.id}&token={token}'
+        activation_link = f'https://apiusers2022.pythonanywhere.com/api/users/activate/?user={instance.id}&token={token}'
         send_mail(
             subject='Account activation',
             message=activation_link,
