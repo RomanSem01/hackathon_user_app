@@ -1,4 +1,5 @@
-﻿import styled from 'styled-components';
+﻿import { Form } from 'formik';
+import styled from 'styled-components';
 import themes from '../constants/themes';
 
 export const AuthWrapper = styled.div`
@@ -16,8 +17,8 @@ export const AuthBgWrapper = styled.div`
 
 export const AuthContainer = styled.div`
   position: absolute;
-  width: 600px;
-  height: 500px;
+  width: ${themes.boxSizes.authContainerWidth};
+  height: ${themes.boxSizes.authContainerHeight};
   top: 100px;
   background-color: rgba(255, 255, 255, 0.2);
   -webkit-backdrop-filter: blur(20px);
@@ -25,15 +26,50 @@ export const AuthContainer = styled.div`
   border-radius: ${themes.spacing.tertiary};
 `;
 
-export const InputWrapper = styled.form`
+export const InputWrapper = styled(Form)`
   position: absolute;
-  width: 600px;
-  height: 500px;
-  top: 120px;
+  width: ${themes.boxSizes.authContainerWidth};
+  height: ${themes.boxSizes.authContainerHeight};
+  top: 100px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: ${themes.font.family.poppins};
+
+  &.login {
+    margin-top: 70px;
+    /* margin-top: 170px; */
+  }
 `;
 
-export const FormTitle = styled.h1``;
+export const FormTitle = styled.h1`
+  margin-bottom: 0;
+`;
+
+export const FormButton = styled.button`
+  position: relative;
+  margin-top: 20px;
+  height: 50px;
+  width: 310px;
+  margin-left: 12px;
+  border-radius: ${themes.spacing.primary};
+  border: none;
+  outline: none;
+  font-size: ${themes.font.size.tertiary};
+  font-weight: ${themes.font.weight.bold};
+  background: ${themes.colors.authBtn};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const FormMessage = styled.p`
+  position: relative;
+`;
+
+export const Link = styled.a`
+  color: ${themes.colors.authBtn};
+  text-decoration: underline;
+`;
