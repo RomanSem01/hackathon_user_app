@@ -59,8 +59,8 @@ const AuthPage: NextPage = () => {
           ))}
           <Styled.FormButton type="submit">Submit</Styled.FormButton>
           <Styled.FormMessage>
-            Don&#39;t have an account?{' '}
-            <Styled.Link href="/signup">Signup</Styled.Link>
+            Already have an account?{' '}
+            <Styled.Link href="/login">Login</Styled.Link>
           </Styled.FormMessage>
           {isOpen && <Modal handleClose={handleModalClose} />}
         </Styled.InputWrapper>
