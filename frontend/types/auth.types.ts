@@ -20,3 +20,9 @@ export interface ILoginData {
 export interface IAuthRes {
   username: string;
 }
+
+export interface ISignupResponse {
+  username: string;
+  email: string;
+  is_active: boolean;
+}

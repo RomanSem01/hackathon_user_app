@@ -1,19 +1,43 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import * as Styled from '../../styles/auth.styled';
 import AuthBg from '../../public/authBg.jpg';
 import AuthInputField from '../../components/auth-input-field';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import {
   SignupInitialData,
   SignupInputs,
 } from '../../constants/form.constants';
-import { ISignupData } from '../../types/auth.types';
+import { ISignupData, ISignupResponse } from '../../types/auth.types';
+import { useMutation } from 'react-query';
+import { queryKeys } from '../../constants/query-keys.constants';
+import { authService } from '../../services/auth.service';
+import Modal from '../../components/modal';
 
 const AuthPage: NextPage = () => {
-  const handleSubmit = (values: ISignupData) => {
-    console.log(values);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { mutateAsync } = useMutation(
+    queryKeys.postSignup,
+    (signupData: ISignupData) => {
+      return authService.register(signupData);
+    },
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        data?.is_active ? console.log('here') : setIsOpen(true);
+      },
+    },
+  );
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+  const handleSubmit = (
+    values: ISignupData,
+    actions: FormikHelpers<ISignupData>,
+  ) => {
+    mutateAsync(values);
+    actions.resetForm();
   };
   return (
     <Styled.AuthWrapper>
@@ -38,6 +62,7 @@ const AuthPage: NextPage = () => {
             Don&#39;t have an account?{' '}
             <Styled.Link href="/signup">Signup</Styled.Link>
           </Styled.FormMessage>
+          {isOpen && <Modal handleClose={handleModalClose} />}
         </Styled.InputWrapper>
       </Formik>
     </Styled.AuthWrapper>
