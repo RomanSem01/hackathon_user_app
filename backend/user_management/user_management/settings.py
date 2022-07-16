@@ -135,6 +135,6 @@ CORS_ALLOWED_ORIGINS = [
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "gorn228@gmail.com"
+EMAIL_HOST_USER = "gorn228322@gmail.com"
 EMAIL_HOST_PASSWORD = "ytpxqnccmsbmbhcl"
 EMAIL_PORT = 587

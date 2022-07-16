@@ -70,7 +70,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 @receiver(post_save, sender=CustomUser)
 def send_activation_email(instance, **kwargs):
     token = default_token_generator.make_token(instance)
-    activation_link = f'api/users/activate/?user={instance.id}&token={token}'
+    activation_link = f'http://localhost:8000/api/users/activate/?user={instance.id}&token={token}'
     send_mail(
         subject='Account activation',
         message=activation_link,
