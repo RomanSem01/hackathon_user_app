@@ -148,6 +148,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://user-management01.herokuapp.com',
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
