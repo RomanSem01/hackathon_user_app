@@ -2,12 +2,11 @@ from rest_framework import generics
 from rest_framework import views
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, serializers
 from django.contrib.auth.tokens import default_token_generator
 from users.models import CustomUser
-from users.serializers import UserListSerializer, UserLoginSerializer
+from users.serializers import UserListSerializer, LoginSerializer
 from users.permissions import UserListCreatePermission
-from django.contrib.auth import login, authenticate
 
 
 class UsersListCreateAPIView(generics.ListCreateAPIView):
@@ -37,14 +36,13 @@ class UserActivateView(views.APIView):
 
 class UserLoginView(views.APIView):
     permission_classes = (
-        AllowAny,
+    AllowAny,
     )
-    serializer_class = UserLoginSerializer
+    serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
-        serializer = UserLoginSerializer(data=request.data)
+    def post(self, request):
+
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['username']
-        login(request, user)
-        return super(UserLoginView, self).post(request, format=None)
-        
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
