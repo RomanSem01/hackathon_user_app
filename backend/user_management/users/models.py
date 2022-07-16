@@ -52,7 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         default=False,
     )
 
-    object = CustomUserManager()
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'password']
