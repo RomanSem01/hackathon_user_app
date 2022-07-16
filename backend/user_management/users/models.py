@@ -1,3 +1,5 @@
+from datetime import timedelta, datetime
+
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
@@ -6,6 +8,7 @@ from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+import jwt
 
 
 class CustomUserManager(BaseUserManager):
@@ -65,6 +68,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "User",
         verbose_name_plural = "Users"
+    
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+    def _generate_jwt_token(self):
+        dt = datetime.now() + timedelta(days=1)
+
+        token = jwt.encode({
+            'id': self.pk,
+            'exp': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token
 
 
 @receiver(post_save, sender=CustomUser)
