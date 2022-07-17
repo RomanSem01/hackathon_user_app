@@ -6,7 +6,7 @@
 };
 
 export const LoginInitialData = {
-  email: '',
+  username: '',
   password: '',
 };
 
@@ -23,6 +23,6 @@ export const SignupInputs = [
 ];
 
 export const LoginInputs = [
-  { type: 'email', placeholder: ' ', name: 'email', label: 'Email' },
+  { type: 'text', placeholder: ' ', name: 'username', label: 'Username' },
   { type: 'password', placeholder: ' ', name: 'password', label: 'Password' },
 ];

@@ -9,7 +9,7 @@ import {
   SignupInitialData,
   SignupInputs,
 } from '../../constants/form.constants';
-import { ISignupData, ISignupResponse } from '../../types/auth.types';
+import { ISignupData } from '../../types/auth.types';
 import { useMutation } from 'react-query';
 import { queryKeys } from '../../constants/query-keys.constants';
 import { authService } from '../../services/auth.service';
@@ -24,8 +24,7 @@ const AuthPage: NextPage = () => {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
-        data?.is_active ? console.log('here') : setIsOpen(true);
+        !data?.is_active && setIsOpen(true);
       },
     },
   );
@@ -62,7 +61,12 @@ const AuthPage: NextPage = () => {
             Already have an account?{' '}
             <Styled.Link href="/login">Login</Styled.Link>
           </Styled.FormMessage>
-          {isOpen && <Modal handleClose={handleModalClose} />}
+          {isOpen && (
+            <Modal
+              text="Please click the activation link that we have sent to your email!"
+              handleClose={handleModalClose}
+            />
+          )}
         </Styled.InputWrapper>
       </Formik>
     </Styled.AuthWrapper>
