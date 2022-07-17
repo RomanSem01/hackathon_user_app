@@ -1,6 +1,5 @@
 ﻿import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
-// import useOutClicked from '../../hooks/useOuterClick';
+import React from 'react';
 import closeIcon from '../../public/closeIcon.svg';
 import * as Styled from '../../styles/modal.styled';
 

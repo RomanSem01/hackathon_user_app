@@ -44,6 +44,10 @@ const Activation: NextPage = () => {
     },
   );
 
+  setTimeout(() => {
+    router.push('/login');
+  }, 5000);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Styled.ContainerWrapper>

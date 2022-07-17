@@ -15,6 +15,7 @@
   font: {
     family: {
       poppins: "'Poppins', sans-serif",
+      quicksand: "'Quicksand', sans-serif",
     },
     weight: {
       light: 300,
@@ -44,8 +45,14 @@
     inputText: '#adadad',
     authBtn: '#F17119',
     link: '#c0392b',
+    navbarBg: '#130f40',
+    navbarText: '#c7ecee',
+    homeBg: '#f5f6fa',
+    tableBg: '#dcdde1',
     activationBg: '#bdc3c7',
     activationBox: '#ecf0f1',
+    authBtnHover: '#e55b00',
+    deleteBtn: '#FF0000',
   },
   media: {
     minTabletLandScape: '(min-width: 992px)',

@@ -32,17 +32,3 @@ export class AuthService {
 
 const factory = new HttpServiceFactory();
 export const authService = new AuthService(factory.createHttpService());
-
-//how to use in your component with react-query
-
-// const addExampleMutation = useMutation(
-//   ({email, password}: {email: string; password: string}) =>
-//     exampleService.examplePost(email, password),
-//   {
-//     onSuccess: () => {
-//       queryClient.invalidateQueries('get_data');
-//     },
-//   },
-// );
-
-//code services in a component folder

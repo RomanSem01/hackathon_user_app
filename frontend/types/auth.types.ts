@@ -7,6 +7,9 @@
 
 export interface ISignupData {
   username: string;
+  first_name: string;
+  last_name: string;
+  job: string;
   email: string;
   password: string;
   check_password: string;
