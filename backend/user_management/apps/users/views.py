@@ -3,11 +3,10 @@ from rest_framework import views
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework_simplejwt.views import TokenObtainPairView
-from users.models import CustomUser
-from users.tokens import account_activation_token
-from users.serializers import UserListSerializer, CustomObtainTokenSerializer
-from users.permissions import UserListCreatePermission
+from apps.users.models import CustomUser
+from apps.users.tokens import account_activation_token
+from apps.users.serializers import UserListSerializer
+from apps.users.permissions import UserListCreatePermission
 
 
 class UsersListCreateAPIView(generics.ListCreateAPIView):
@@ -33,24 +32,3 @@ class UserActivateView(views.APIView):
         user.is_active = True
         user.save()
         return Response(data={'message': 'User successfully confirmed'}, status=status.HTTP_200_OK)
-
-
-# class UserLoginView(views.APIView):
-#     permission_classes = (
-#     AllowAny,
-#     )
-#     serializer_class = LoginSerializer
-
-#     def post(self, request):
-
-#         serializer = self.serializer_class(data=request.data, context={'request': request})
-#         serializer.is_valid(raise_exception=True)
-
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class UserLoginView(TokenObtainPairView):
-    permission_classes = (
-        AllowAny,
-    )
-    serializer_class = CustomObtainTokenSerializer
