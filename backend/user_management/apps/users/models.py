@@ -45,6 +45,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=64,
         unique=True
     )
+    first_name = models.CharField(
+        verbose_name="first name",
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    last_name = models.CharField(
+        verbose_name="last name",
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    job = models.CharField(
+        verbose_name="job",
+        max_length=64,
+        blank=True,
+        null=True
+    )
     created_on = models.DateTimeField(
         verbose_name="created on",
         auto_now_add=True
