@@ -1,13 +1,12 @@
-from rest_framework import generics
-from rest_framework import views
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, status, views
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
+
 from apps.users.models import CustomUser
-from apps.users.tokens import account_activation_token
-from apps.users.serializers import UserListSerializer, UserDetailsSerializer
 from apps.users.permissions import UserListCreatePermission
+from apps.users.serializers import UserDetailsSerializer, UserListSerializer
+from apps.users.tokens import account_activation_token
 
 
 class UsersListCreateAPIView(generics.ListCreateAPIView):
