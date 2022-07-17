@@ -40,14 +40,17 @@ class UserDetailsView(generics.RetrieveDestroyAPIView):
     )
     serializer_class = UserDetailsSerializer
 
-    def get_object(self):
+    def get_object(self, pk):
         try:
-            return CustomUser.objects.get(pk=self.kwargs.get('pk'))
+            return CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def get(self, request, pk):
+        return self.get_object(pk)
 
-    def delete(self, request, format=None):
-        user = self.get_object()
+    def delete(self, request, pk):
+        user = self.get_object(pk)
         if user.is_staff:
             return Response(data={'message': "Can't delete admin user."}, status=status.HTTP_404_NOT_FOUND)
         user.delete()
