@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from apps.users.models import CustomUser
 from apps.users.permissions import UserListCreatePermission
-from apps.users.serializers import UserDetailsSerializer, UserListSerializer
+from apps.users.serializers import UserListSerializer
 from apps.users.tokens import account_activation_token
 
 
@@ -34,11 +34,10 @@ class UserActivateView(views.APIView):
         return Response(data={'message': 'User successfully confirmed'}, status=status.HTTP_200_OK)
 
 
-class UserDetailsView(generics.RetrieveDestroyAPIView):
+class UserDestroyView(generics.DestroyAPIView):
     permission_classes = (
         IsAuthenticated,
     )
-    serializer_class = UserDetailsSerializer
 
     def get_object(self):
         return get_object_or_404(CustomUser, pk=self.kwargs.get('pk'))

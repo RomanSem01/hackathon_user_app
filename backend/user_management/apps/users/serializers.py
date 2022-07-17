@@ -8,10 +8,14 @@ class UserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'is_active', 'password', 'check_password',]
+        fields =  [
+            'username', 'email', 'password', 'check_password', 
+            'first_name', 'last_name', 'job', 'is_staff', 'is_active',
+            ]
         extra_kwargs = {
             'password': {'write_only': True, 'min_length': 6},
-            'is_active': {'read_only': True}
+            'is_active': {'read_only': True},
+            'is_staff': {'read_only': True},
             }
 
     def validate(self, attrs):
@@ -29,10 +33,3 @@ class UserListSerializer(serializers.ModelSerializer):
         user.set_password(validated_data.get('password'))
         user.save()
         return user
-
-
-class UserDetailsSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'job', 'is_staff']
