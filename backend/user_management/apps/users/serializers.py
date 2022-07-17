@@ -11,7 +11,7 @@ class UserListSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True, 'min_length': 6},
             'is_active': {'read_only': True}
-                        }
+            }
 
     def validate(self, attrs):
         if attrs['password'] != attrs['check_password']:
