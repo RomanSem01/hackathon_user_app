@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from apps.auth_user.serializers import CustomObtainTokenSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 
 class UserLoginView(TokenObtainPairView):
@@ -19,9 +19,12 @@ class UserLogoutView(APIView):
 
     def post(self, request):
         try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+            refresh_token = request.data['refresh']
+            refresh_token = RefreshToken(refresh_token)
+            refresh_token.blacklist()
+            access_token = request.data['access']
+            access_token = AccessToken(access_token)
+            access_token.blacklist()
 
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
