@@ -28,26 +28,26 @@ class UserActivateView(views.APIView):
         user = CustomUser.objects.filter(id=request.GET.get('user')).first()
         token = request.GET.get('token')
         if not account_activation_token.check_token(user, token):
-            return Response(data={'message': 'User not found or token is expired'}, status=status.HTTP_200_OK)
+            return Response(data={'message': 'User not found or token is expired'}, status=status.HTTP_400_BAD_REQUEST)
         user.is_active = True
         user.save()
         return Response(data={'message': 'User successfully confirmed'}, status=status.HTTP_200_OK)
 
 
-class UserDetailsView(views.APIView):
+class UserDetailsView(generics.RetrieveDestroyAPIView):
     permission_classes = (
         IsAuthenticated,
     )
     serializer_class = UserDetailsSerializer
 
-    def get_object(self, pk):
+    def get_object(self):
         try:
-            return CustomUser.objects.get(pk=pk)
+            return CustomUser.objects.get(pk=self.kwargs.get('pk'))
         except CustomUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, pk, format=None):
-        user = self.get_object(pk)
+    def delete(self, request, format=None):
+        user = self.get_object()
         if user.is_staff:
             return Response(data={'message': "Can't delete admin user."}, status=status.HTTP_404_NOT_FOUND)
         user.delete()
