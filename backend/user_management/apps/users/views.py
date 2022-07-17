@@ -16,7 +16,7 @@ class UsersListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = UserListSerializer
 
     def get_queryset(self):
-        return CustomUser.objects.all()
+        return CustomUser.objects.all().order_by('-created_on')
 
 
 class UserActivateView(views.APIView):
