@@ -3,6 +3,7 @@ from rest_framework import views
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 from apps.users.models import CustomUser
 from apps.users.tokens import account_activation_token
 from apps.users.serializers import UserListSerializer, UserDetailsSerializer
@@ -40,18 +41,12 @@ class UserDetailsView(generics.RetrieveDestroyAPIView):
     )
     serializer_class = UserDetailsSerializer
 
-    def get_object(self, pk):
-        try:
-            return CustomUser.objects.get(pk=pk)
-        except CustomUser.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_object(self):
+        return get_object_or_404(CustomUser, pk=self.kwargs.get('pk'))
     
-    def get(self, request, pk):
-        return self.get_object(pk)
-
     def delete(self, request, pk):
-        user = self.get_object(pk)
+        user = self.get_object()
         if user.is_staff:
-            return Response(data={'message': "Can't delete admin user."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={"error": "You can't delete admins"}, status=status.HTTP_400_BAD_REQUEST)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
