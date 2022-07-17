@@ -24,6 +24,8 @@ const AuthPage: NextPage = () => {
     },
     {
       onSuccess: (data) => {
+        console.log(data);
+
         !data?.is_active && setIsOpen(true);
       },
     },
@@ -40,10 +42,6 @@ const AuthPage: NextPage = () => {
   };
   return (
     <Styled.AuthWrapper>
-      <Styled.AuthBgWrapper>
-        <Image src={AuthBg.src} alt="auth bg img" layout="fill" />
-      </Styled.AuthBgWrapper>
-      <Styled.AuthContainer />
       <Formik initialValues={SignupInitialData} onSubmit={handleSubmit}>
         <Styled.InputWrapper method="post">
           <Styled.FormTitle>Registration</Styled.FormTitle>
@@ -61,14 +59,14 @@ const AuthPage: NextPage = () => {
             Already have an account?{' '}
             <Styled.Link href="/login">Login</Styled.Link>
           </Styled.FormMessage>
-          {isOpen && (
-            <Modal
-              text="Please click the activation link that we have sent to your email!"
-              handleClose={handleModalClose}
-            />
-          )}
         </Styled.InputWrapper>
       </Formik>
+      {isOpen && (
+        <Modal
+          text="Please click the activation link that we have sent to your email!"
+          handleClose={handleModalClose}
+        />
+      )}
     </Styled.AuthWrapper>
   );
 };

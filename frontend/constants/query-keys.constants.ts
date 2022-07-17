@@ -2,4 +2,6 @@
   postLogin: 'postLogin',
   postSignup: 'postSignup',
   activationLink: 'activationLink',
+  getUsers: 'getUsers',
+  deleteUser: 'deleteUser',
 };

@@ -11,8 +11,10 @@ import { useMutation } from 'react-query';
 import { authService } from '../../services/auth.service';
 import { queryKeys } from '../../constants/query-keys.constants';
 import Modal from '../../components/modal';
+import { useRouter } from 'next/router';
 
 const AuthPage: NextPage = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { mutateAsync } = useMutation(
     queryKeys.postSignup,
@@ -22,9 +24,11 @@ const AuthPage: NextPage = () => {
     {
       onSuccess: (data) => {
         if (data) {
-          const { access, refresh } = data;
+          const { access, refresh, username } = data;
           localStorage.setItem('ACCESS_TOKEN', access);
           localStorage.setItem('REFRESH_TOKEN', refresh);
+          localStorage.setItem('USERNAME', username);
+          router.push('/');
         }
       },
     },
@@ -42,13 +46,9 @@ const AuthPage: NextPage = () => {
   };
   return (
     <Styled.AuthWrapper>
-      <Styled.AuthBgWrapper>
-        <Image src={AuthBg.src} alt="auth bg img" layout="fill" />
-      </Styled.AuthBgWrapper>
-      <Styled.AuthContainer />
       <Formik initialValues={LoginInitialData} onSubmit={handleSubmit}>
         <Styled.InputWrapper method="post" className="login">
-          <Styled.FormTitle>Log in</Styled.FormTitle>
+          <Styled.FormTitle className="login">Log in</Styled.FormTitle>
           {LoginInputs.map((input, ind) => (
             <AuthInputField
               key={ind}
@@ -59,7 +59,6 @@ const AuthPage: NextPage = () => {
             />
           ))}
           <Styled.FormButton type="submit">Submit</Styled.FormButton>
-
           <Styled.FormMessage>
             Don&#39;t have an account?{' '}
             <Styled.Link href="/signup">Signup</Styled.Link>

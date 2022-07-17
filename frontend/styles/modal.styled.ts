@@ -13,6 +13,7 @@ export const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(12, 16, 51, 0.75);
+  font-family: ${themes.font.family.poppins};
 `;
 
 export const ModalWrapper = styled.div`
