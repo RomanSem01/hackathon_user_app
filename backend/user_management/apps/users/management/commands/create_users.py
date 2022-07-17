@@ -16,7 +16,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fake = Faker()
         for _ in range(40):
-            print('sheeeesh')
             user = CustomUser.objects.create(
                 username=fake.user_name(),
                 email=fake.email(),
