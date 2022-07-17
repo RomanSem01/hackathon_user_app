@@ -8,6 +8,7 @@ class CustomObtainTokenSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
         data['username'] = self.user.username
+        data['is_active'] = self.user.is_active
         return data
 
     @classmethod
