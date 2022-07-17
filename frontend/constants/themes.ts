@@ -44,6 +44,8 @@
     inputText: '#adadad',
     authBtn: '#F17119',
     link: '#c0392b',
+    activationBg: '#bdc3c7',
+    activationBox: '#ecf0f1',
   },
   media: {
     minTabletLandScape: '(min-width: 992px)',

@@ -1,12 +1,18 @@
 ﻿// import { IResponse } from '../types';
-import { ILoginData, ISignupData, ISignupResponse } from '../types/auth.types';
+import {
+  IActivationResponse,
+  ILoginData,
+  ILoginResponse,
+  ISignupData,
+  ISignupResponse,
+} from '../types/auth.types';
 import { HttpService } from './http.service';
 import { HttpServiceFactory } from './index';
 
 export class AuthService {
   constructor(private httpService: HttpService) {}
-  public login(data: ILoginData) {
-    return this.httpService.post('example/post', {
+  public login(data: ILoginData): Promise<ILoginResponse | undefined | void> {
+    return this.httpService.post('api/auth/login/', {
       ...data,
     });
   }
@@ -16,6 +22,11 @@ export class AuthService {
     return this.httpService.post('api/users/', {
       ...data,
     });
+  }
+  public activation(
+    query: string,
+  ): Promise<IActivationResponse | undefined | void> {
+    return this.httpService.get(`api/users/activate${query}`);
   }
 }
 

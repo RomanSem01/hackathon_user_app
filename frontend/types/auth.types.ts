@@ -13,7 +13,7 @@ export interface ISignupData {
 }
 
 export interface ILoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -25,4 +25,17 @@ export interface ISignupResponse {
   username: string;
   email: string;
   is_active: boolean;
+}
+export interface ILoginResponse {
+  access: string;
+  refresh: string;
+  username: string;
+}
+
+export interface IActivationResponse {
+  message: string;
+}
+
+export interface IActivationData {
+  data: IActivationResponse | undefined;
 }
