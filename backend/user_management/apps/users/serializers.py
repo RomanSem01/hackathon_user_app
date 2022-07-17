@@ -9,7 +9,7 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields =  [
-            'username', 'email', 'password', 'check_password', 
+            'id', 'username', 'email', 'password', 'check_password', 
             'first_name', 'last_name', 'job', 'is_staff', 'is_active',
             ]
         extra_kwargs = {
