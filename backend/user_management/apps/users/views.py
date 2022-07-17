@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.users.models import CustomUser
 from apps.users.tokens import account_activation_token
-from apps.users.serializers import UserListSerializer
+from apps.users.serializers import UserListSerializer, UserDetailsSerializer
 from apps.users.permissions import UserListCreatePermission
 
 
@@ -38,6 +38,7 @@ class UserDetailsView(views.APIView):
     permission_classes = (
         IsAuthenticated,
     )
+    serializer_class = UserDetailsSerializer
 
     def get_object(self, pk):
         try:
