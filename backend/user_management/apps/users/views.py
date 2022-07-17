@@ -47,5 +47,7 @@ class UserDetailsView(views.APIView):
 
     def delete(self, request, pk, format=None):
         user = self.get_object(pk)
+        if user.is_staff:
+            return Response(data={'message': "Can't delete admin user."}, status=status.HTTP_404_NOT_FOUND)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
