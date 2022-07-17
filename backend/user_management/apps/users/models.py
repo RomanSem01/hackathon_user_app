@@ -88,7 +88,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 def send_activation_email(instance, created, **kwargs):
     if created:
         token = account_activation_token.make_token(instance)
-        activation_link = f'https://api-users-management.herokuapp.com/api/users/activate/?user={instance.id}' \
+        activation_link = f'https://user-management01.herokuapp.com/activation?user={instance.id}' \
                           f'&token={token}'
         send_mail(
             subject='Account activation',
