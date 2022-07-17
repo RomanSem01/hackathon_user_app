@@ -27,7 +27,10 @@ class UserListSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create(
             username=validated_data.get('username'),
-            email=validated_data.get('email')
+            email=validated_data.get('email'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
+            job=validated_data.get('job')
         )
 
         user.set_password(validated_data.get('password'))
