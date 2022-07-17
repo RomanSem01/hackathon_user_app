@@ -2,11 +2,11 @@ from rest_framework import generics
 from rest_framework import views
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status, serializers
-from django.contrib.auth.tokens import default_token_generator
+from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
 from users.models import CustomUser
 from users.tokens import account_activation_token
-from users.serializers import UserListSerializer, LoginSerializer
+from users.serializers import UserListSerializer, CustomObtainTokenSerializer
 from users.permissions import UserListCreatePermission
 
 
@@ -35,15 +35,22 @@ class UserActivateView(views.APIView):
         return Response(data={'message': 'User successfully confirmed'}, status=status.HTTP_200_OK)
 
 
-class UserLoginView(views.APIView):
+# class UserLoginView(views.APIView):
+#     permission_classes = (
+#     AllowAny,
+#     )
+#     serializer_class = LoginSerializer
+
+#     def post(self, request):
+
+#         serializer = self.serializer_class(data=request.data, context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserLoginView(TokenObtainPairView):
     permission_classes = (
-    AllowAny,
+        AllowAny,
     )
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer_class = CustomObtainTokenSerializer
