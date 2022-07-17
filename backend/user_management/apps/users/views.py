@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework import views
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from apps.users.models import CustomUser
@@ -32,3 +32,20 @@ class UserActivateView(views.APIView):
         user.is_active = True
         user.save()
         return Response(data={'message': 'User successfully confirmed'}, status=status.HTTP_200_OK)
+
+
+class UserDetailsView(views.APIView):
+    permission_classes = (
+        IsAuthenticated,
+    )
+
+    def get_object(self, pk):
+        try:
+            return CustomUser.objects.get(pk=pk)
+        except CustomUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk, format=None):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
