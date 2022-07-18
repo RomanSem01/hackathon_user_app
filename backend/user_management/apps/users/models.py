@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -112,11 +114,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 def send_activation_email(instance, created, **kwargs):
     if created:
         token = account_activation_token.make_token(instance)
-        activation_link = f'https://user-management01.herokuapp.com/activation?user={instance.id}' \
-                          f'&token={token}'
+        context = {
+            'username': instance.username, 
+            'link': f'https://user-management01.herokuapp.com/activation?user={instance.id}' \
+                    f'&token={token}'
+            }
+        html_message = render_to_string('activation_email.html', context=context)
+        plain_message = strip_tags(html_message)
         send_mail(
             subject='Account activation',
-            message=activation_link,
+            message=plain_message,
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[instance.email, ]
+            recipient_list=[instance.email, ],
+            html_message=html_message
         )
