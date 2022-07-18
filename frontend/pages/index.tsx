@@ -23,6 +23,7 @@ const Home: NextPage = () => {
       setScroll(ref.current.getBoundingClientRect().y < -50);
     }
   }, []);
+
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler, true);
     return () => window.removeEventListener('scroll', scrollHandler, true);
@@ -30,8 +31,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setAccess(localStorage.getItem('ACCESS_TOKEN') || '');
-    setUsername(localStorage.getItem('USERNAME') || '');
-  }, []);
+    if (access.length > 0) {
+      setUsername(localStorage.getItem('USERNAME') || '');
+    } else {
+      setUsername('');
+    }
+  }, [access.length]);
 
   const { data, refetch }: IUsersResponse = useQuery(
     queryKeys.getUsers,
@@ -55,13 +60,18 @@ const Home: NextPage = () => {
 
   return access && isAuth ? (
     <Styled.HomeWrapper ref={ref}>
-      <NavBar scrolled={scroll} name={username} />
+      <NavBar scrolled={scroll} name={username} refetch={refetch} />
       <Styled.Main>
         <Styled.ListContainer>
           <Styled.TableHead>
             <Styled.TableRow>
               {headerData.map((el, idx) => (
-                <Styled.TableData key={idx}>{el}</Styled.TableData>
+                <Styled.TableData
+                  className={el.flex === 3 ? 'main' : 'secondary'}
+                  key={idx}
+                >
+                  {el.name}
+                </Styled.TableData>
               ))}
             </Styled.TableRow>
           </Styled.TableHead>
@@ -75,7 +85,11 @@ const Home: NextPage = () => {
     </Styled.HomeWrapper>
   ) : (
     <Styled.HomeWrapper ref={ref}>
-      <NavBar scrolled={scroll} name={username} />
+      <NavBar
+        scrolled={scroll}
+        name={access !== '' ? username : undefined}
+        refetch={refetch}
+      />
       <Styled.Main>
         <Styled.AuthMessage>
           Please <Link href="/login"> login </Link> or{' '}

@@ -1,8 +1,6 @@
 ﻿import React, { useState } from 'react';
 import type { NextPage } from 'next';
-import Image from 'next/image';
 import * as Styled from '../../styles/auth.styled';
-import AuthBg from '../../public/authBg.jpg';
 import AuthInputField from '../../components/auth-input-field';
 import { Formik, FormikHelpers } from 'formik';
 import {
@@ -14,9 +12,13 @@ import { useMutation } from 'react-query';
 import { queryKeys } from '../../constants/query-keys.constants';
 import { authService } from '../../services/auth.service';
 import Modal from '../../components/modal';
+import { SignupValidation } from '../../validator/signup.validator';
+import AuthBg from '../../public/authBg.jpg';
+import Image from 'next/image';
 
 const AuthPage: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const { mutateAsync } = useMutation(
     queryKeys.postSignup,
     (signupData: ISignupData) => {
@@ -24,9 +26,17 @@ const AuthPage: NextPage = () => {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
-
-        !data?.is_active && setIsOpen(true);
+        if (data) {
+          setError('');
+          !data?.is_active && setIsOpen(true);
+        } else {
+          setError(
+            'Something went wrong. Try to input another username or email',
+          );
+        }
+      },
+      onMutate: () => {
+        setError('');
       },
     },
   );
@@ -42,24 +52,42 @@ const AuthPage: NextPage = () => {
   };
   return (
     <Styled.AuthWrapper>
-      <Formik initialValues={SignupInitialData} onSubmit={handleSubmit}>
-        <Styled.InputWrapper method="post">
-          <Styled.FormTitle>Registration</Styled.FormTitle>
-          {SignupInputs.map((input, ind) => (
-            <AuthInputField
-              key={ind}
-              type={input.type}
-              placeholder={input.placeholder}
-              label={input.label}
-              name={input.name}
-            />
-          ))}
-          <Styled.FormButton type="submit">Submit</Styled.FormButton>
-          <Styled.FormMessage>
-            Already have an account?{' '}
-            <Styled.Link href="/login">Login</Styled.Link>
-          </Styled.FormMessage>
-        </Styled.InputWrapper>
+      <Styled.AuthBg>
+        <Image src={AuthBg.src} alt="auth bg ing" layout="fill" />
+      </Styled.AuthBg>
+      <Formik
+        initialValues={SignupInitialData}
+        onSubmit={handleSubmit}
+        validateOnBlur
+        validationSchema={SignupValidation}
+      >
+        {({ errors }) => (
+          <Styled.InputWrapper method="post">
+            <Styled.FormTitle>Registration</Styled.FormTitle>
+            {SignupInputs.map((input, ind) => {
+              const { name } = input;
+              return (
+                <AuthInputField
+                  key={ind}
+                  type={input.type}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  name={name}
+                  // @ts-ignore
+                  error={errors[name]}
+                />
+              );
+            })}
+            <Styled.FormButton type="submit">Submit</Styled.FormButton>
+            <Styled.FormMessage>
+              Already have an account?{' '}
+              <Styled.Link href="/login">Login</Styled.Link>
+            </Styled.FormMessage>
+            {error.length > 0 && (
+              <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
+            )}
+          </Styled.InputWrapper>
+        )}
       </Formik>
       {isOpen && (
         <Modal

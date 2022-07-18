@@ -1,24 +1,11 @@
 ﻿import { Form } from 'formik';
-import AuthBg from '../public/authBg.jpg';
+
 import styled from 'styled-components';
 import themes from '../constants/themes';
 
-export const AuthWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
+export const AuthWrapper = styled.main`
   display: flex;
   justify-content: center;
-  background: url(${AuthBg.src});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-`;
-
-export const AuthBgWrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 100%;
 `;
 
 export const InputWrapper = styled(Form)`
@@ -26,12 +13,11 @@ export const InputWrapper = styled(Form)`
   position: absolute;
   width: ${themes.boxSizes.authContainerWidth};
   min-height: ${themes.boxSizes.authContainerHeight};
-  margin-top: 20px;
+  margin: 20px 0 50px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: ${themes.font.family.poppins};
-
   background-color: rgba(8, 90, 127, 0.4);
   background-image: linear-gradient(
     315deg,
@@ -45,6 +31,14 @@ export const InputWrapper = styled(Form)`
   &.login {
     margin-top: 80px;
   }
+`;
+
+export const AuthBg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
 `;
 
 export const FormTitle = styled.h1`
@@ -83,4 +77,20 @@ export const FormMessage = styled.p`
 export const Link = styled.a`
   color: ${themes.colors.authBtn};
   text-decoration: underline;
+`;
+
+export const ErrorMessage = styled.div`
+  background-color: ${themes.colors.errorMsg};
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: ${themes.font.weight.bold};
+  font-size: ${themes.font.size.oneAndHalf};
+  border-radius: 1rem;
+  border: 5px solid ${themes.colors.errorBorderMsg};
+  width: 80%;
+  padding: 0 2rem;
 `;

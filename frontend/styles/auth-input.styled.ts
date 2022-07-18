@@ -5,6 +5,7 @@ import themes from '../constants/themes';
 export const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin-top: 20px;
 `;
 
@@ -60,4 +61,11 @@ export const InputLabel = styled.label`
   transition: all 0.14s ease-in-out;
   font-size: 14px;
   color: ${themes.colors.inputText};
+`;
+
+export const ErrorMessage = styled.span`
+  color: ${themes.colors.deleteBtn};
+  font-weight: ${themes.font.weight.bold};
+  margin-left: 20px;
+  font-size: ${themes.font.size.quinary};
 `;

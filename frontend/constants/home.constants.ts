@@ -1,4 +1,11 @@
-﻿export const headerData = ['Username', 'Email', 'Active', 'Staff'];
+﻿export const headerData = [
+  { name: 'Username', flex: 3 },
+  { name: 'Email', flex: 3 },
+  { name: 'Active', flex: 1 },
+  { name: 'Staff', flex: 1 },
+  { name: '', flex: 1 },
+  { name: '', flex: 1 },
+];
 
 export const userData = {
   email: 'sanya0000010@gmail.com',

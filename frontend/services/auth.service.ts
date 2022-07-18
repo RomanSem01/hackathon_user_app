@@ -6,6 +6,7 @@ import {
   ISignupData,
   ISignupResponse,
 } from '../types/auth.types';
+import { ILogoutData, IUserHeader } from '../types/users.types';
 import { HttpService } from './http.service';
 import { HttpServiceFactory } from './index';
 
@@ -16,6 +17,15 @@ export class AuthService {
       ...data,
     });
   }
+
+  public logoutUser(userData: ILogoutData) {
+    return this.httpService.post(
+      'api/auth/logout/',
+      { refresh: userData.refresh },
+      { headers: { ...userData.auth } },
+    );
+  }
+
   public register(
     data: ISignupData,
   ): Promise<ISignupResponse | undefined | void> {

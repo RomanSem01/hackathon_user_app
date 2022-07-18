@@ -70,6 +70,9 @@ export const ListItemLink = styled.div`
   color: ${themes.colors.secondary};
   line-height: 65px;
   font-size: ${themes.font.size.oneAndHalf};
+  &.cursor {
+    cursor: pointer;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -112,6 +115,14 @@ export const TableData = styled.div`
   text-align: center;
   font-size: ${themes.font.size.oneAndHalf};
 
+  &.main {
+    flex: 3;
+  }
+
+  &.secondary {
+    flex: 1;
+  }
+
   @media ${themes.media.maxTabletLandScape} {
     width: 15%;
   }
@@ -133,27 +144,32 @@ export const TableBodyRow = styled.div`
 `;
 
 export const TableBodyData = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 20%;
   text-align: center;
-  @media ${themes.media.maxTabletLandScape} {
-    width: 15%;
-  }
+  flex: 3;
 
+  &.bool {
+    flex: 1;
+  }
   &.collapsed {
     min-width: 12.5%;
     text-align: center;
   }
   &.arrow {
     width: 30px;
-    position: absolute;
-    right: 1.5rem;
     cursor: pointer;
+    flex: 1;
+
+    & svg {
+      width: 30px;
+    }
   }
 
   &.delete {
+    flex: 1;
     width: 30px;
-    position: absolute;
-    right: 6.5rem;
     cursor: pointer;
     color: ${themes.colors.deleteBtn};
     font-weight: ${themes.font.weight.bold};

@@ -1,9 +1,4 @@
-﻿export interface IInputProps {
-  type: string;
-  placeholder?: string;
-  label?: string;
-  name?: string;
-}
+﻿import { FormikErrors } from 'formik';
 
 export interface ISignupData {
   username: string;
@@ -13,6 +8,14 @@ export interface ISignupData {
   email: string;
   password: string;
   check_password: string;
+}
+
+export interface IInputProps {
+  type: string;
+  placeholder?: string;
+  label?: string;
+  name: string;
+  error: string;
 }
 
 export interface ILoginData {

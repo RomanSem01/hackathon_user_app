@@ -14,20 +14,21 @@ interface IList {
 }
 
 const ListElement = ({ data, refetch }: IList) => {
+  const [username, setUsername] = useState<string>('');
   const [access, setAccess] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setAccess(localStorage.getItem('ACCESS_TOKEN') || '');
+    setUsername(localStorage.getItem('USERNAME') || '');
   }, []);
 
   const { mutate } = useMutation(
     queryKeys.deleteUser,
     (userData: IUserDelete) => usersService.deleteUser(userData),
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         refetch();
-        console.log(data);
       },
     },
   );
@@ -101,10 +102,11 @@ const ListElement = ({ data, refetch }: IList) => {
     <>
       <Styled.TableBodyRow>
         {Object.entries(getClearData(data)).map((el) => {
-          console.log(el);
-
           return (
-            <Styled.TableBodyData key={el[0]}>
+            <Styled.TableBodyData
+              key={el[0]}
+              className={typeof el[1] === 'boolean' ? 'bool' : undefined}
+            >
               {typeof el[1] === 'boolean' ? (
                 <Styled.Icon className={el[1] ? 'checkmark' : 'closemark'}>
                   {el[1] ? checkmark : closemark}
@@ -115,13 +117,21 @@ const ListElement = ({ data, refetch }: IList) => {
             </Styled.TableBodyData>
           );
         })}
-        {!data.is_staff && (
+        {
           <Styled.TableBodyData className="delete">
-            <Styled.DeleteBtnContainer onClick={handleDeleteClick}>
-              Delete
+            <Styled.DeleteBtnContainer
+              onClick={
+                (!data.is_staff &&
+                  username !== data.username &&
+                  handleDeleteClick) ||
+                undefined
+              }
+            >
+              {(!data.is_staff && username !== data.username && 'Delete') ||
+                '-'}
             </Styled.DeleteBtnContainer>
           </Styled.TableBodyData>
-        )}
+        }
         <Styled.TableBodyData className="arrow">
           <Styled.ArrowContainer
             onClick={handleArrowClick}

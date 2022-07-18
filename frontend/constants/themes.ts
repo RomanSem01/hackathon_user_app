@@ -53,6 +53,8 @@
     activationBox: '#ecf0f1',
     authBtnHover: '#e55b00',
     deleteBtn: '#FF0000',
+    errorMsg: '#ff7675',
+    errorBorderMsg: '#d63031',
   },
   media: {
     minTabletLandScape: '(min-width: 992px)',

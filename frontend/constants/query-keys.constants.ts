@@ -4,4 +4,5 @@
   activationLink: 'activationLink',
   getUsers: 'getUsers',
   deleteUser: 'deleteUser',
+  logoutUsers: 'logoutUsers',
 };

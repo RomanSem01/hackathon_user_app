@@ -17,5 +17,6 @@ export interface IUsersResponse {
 
 export interface INavBarProps {
   scrolled: boolean;
-  name: string;
+  name?: string;
+  refetch: () => void;
 }
